@@ -2,9 +2,9 @@
 //P253
 import javax.swing.JOptionPane;
 
-public class FirstTimeTest {
+public class TimeTest {
 	public static void main(String args[]) {
-		FirstTime time = new FirstTime();
+		Time time = new Time();
 		String output = "The initial universal time is: " + time.toUniversalString() + "\n"
 				+ "The initial standard time is: " + time.toStandardString() + "\n";
 		time.setTime(13, 27, 6);

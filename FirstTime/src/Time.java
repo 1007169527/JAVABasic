@@ -2,13 +2,13 @@
 //P253
 import java.text.DecimalFormat;
 
-public class FirstTime {
+public class Time {
 	private int hour;
 	private int minute;
 	private int second;
 	private DecimalFormat twoDigits = new DecimalFormat("00");
 
-	public FirstTime() {
+	public Time() {
 		setTime(0, 0, 0);
 	}
 
