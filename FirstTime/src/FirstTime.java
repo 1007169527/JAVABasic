@@ -8,7 +8,7 @@ public class FirstTime {
 	private int second;
 	private DecimalFormat twoDigits = new DecimalFormat("00");
 
-	public void FirstTime() {
+	public FirstTime() {
 		setTime(0, 0, 0);
 	}
 
