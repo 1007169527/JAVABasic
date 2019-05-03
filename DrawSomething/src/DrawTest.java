@@ -174,7 +174,7 @@ public class DrawTest extends JFrame {
 				star.closePath();
 
 				g2d.translate(200, 200);
-				for (int count = 1; count <= xPoints.length * 2; count++) {
+				for (int count = 1; count <= 20; count++) {
 					g2d.rotate(Math.PI / 10.0);
 					g2d.setColor(new Color((int) (Math.random() * 256), (int) (Math.random() * 256),
 							(int) (Math.random() * 256)));
