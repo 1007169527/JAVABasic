@@ -12,13 +12,14 @@ public class Producer extends Thread {
 	public void run() {
 		for (int count = 1; count <= 4; count++) {
 			try {
-				Thread.sleep((int) (3000));
+				Thread.sleep((int) (3000 * Math.random()));
 				sharedLocation.set(count);
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
-		System.out.println(getName() + " done producing." + "\nTerminating " + getName() + ".");
+		// System.out.println(getName() + " done producing." + "\nTerminating " +
+		// getName() + ".");
 	}
 }

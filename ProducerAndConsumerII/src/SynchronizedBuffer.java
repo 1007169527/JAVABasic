@@ -2,10 +2,10 @@
 public class SynchronizedBuffer implements Buffer {
 	private int buffer = -1;
 	private int occupiedBufferCount = 0;
+	private StringBuffer outputLine = new StringBuffer();
 
 	public SynchronizedBuffer() {
 		// TODO Auto-generated constructor stub
-		System.out.println("In constructor stub for SynchronizedBuffer");
 	}
 
 	@Override
@@ -15,7 +15,7 @@ public class SynchronizedBuffer implements Buffer {
 		while (occupiedBufferCount == 1) {
 			try {
 				System.out.println(name + " tries to write.");
-				displayState("Buffer full. " + name + " waits.");
+				// displayState("Buffer full. " + name + " waits.");
 				wait();
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -35,7 +35,7 @@ public class SynchronizedBuffer implements Buffer {
 		while (occupiedBufferCount == 0) {
 			try {
 				System.out.println(name + " tries to read.");
-				displayState("Buffer empty. " + name + " waits.");
+				// displayState("Buffer empty. " + name + " waits.");
 				wait();
 			} catch (Exception e) {
 				// TODO: handle exception
@@ -49,10 +49,12 @@ public class SynchronizedBuffer implements Buffer {
 	}
 
 	public void displayState(String operation) {
-		StringBuffer outputLine = new StringBuffer(operation);
-		outputLine.setLength(40);
+		outputLine.append("\n" + operation + "\t\t\t");
 		outputLine.append(buffer + "\t\t" + occupiedBufferCount);
-		System.out.println(outputLine + "\n");
+		// System.out.println(outputLine + "\n");
 	}
 
+	public void dumpLogs() {
+		System.out.println(outputLine);
+	}
 }

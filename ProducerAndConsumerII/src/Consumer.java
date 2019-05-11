@@ -14,13 +14,14 @@ public class Consumer extends Thread {
 		int sum = 0;
 		for (int count = 1; count <= 4; count++) {
 			try {
-				Thread.sleep((int) (3000));
+				Thread.sleep((int) (3000 * Math.random()));
 				sum += sharedLocation.get();
 			} catch (Exception e) {
 				// TODO: handle exception
 				e.printStackTrace();
 			}
 		}
-		System.out.println(getName() + " read values totaling: " + sum + ".\nTerminating " + getName() + ".");
+		// System.out.println(getName() + " read values totaling: " + sum +
+		// ".\nTerminating " + getName() + ".");
 	}
 }
