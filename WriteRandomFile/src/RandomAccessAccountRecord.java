@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class RandomAccessAccountRecord extends AccountRecord {
-	public static final int SIZE = 42;// 4+15*2+8
+	public static final int SIZE = 72;// 4+15*2*2+8
 	public static final int NAME_LENGTH = 15;
 
 	public RandomAccessAccountRecord() {
