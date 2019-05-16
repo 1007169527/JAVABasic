@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 
 public class RandomAccessAccountRecord extends AccountRecord {
-	public static final int SIZE = 72;
+	public static final int SIZE = 42;
 
 	public RandomAccessAccountRecord() {
 		// TODO Auto-generated constructor stub
