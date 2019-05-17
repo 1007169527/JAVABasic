@@ -28,7 +28,7 @@ public class FileEditor {
 	public void updateRecord(int accountNumber, String firstName, String lastName, double balance)
 			throws IllegalArgumentException, IOException {
 		RandomAccessAccountRecord record = getRecord(accountNumber);
-		if (accountNumber == 0)
+		if (record.getAccount() == 0)
 			throw new IllegalArgumentException("Account does not exist");
 		file.seek((accountNumber - 1) * RandomAccessAccountRecord.SIZE);
 		record = new RandomAccessAccountRecord(accountNumber, firstName, lastName, balance);
@@ -38,7 +38,7 @@ public class FileEditor {
 	public void newRecord(int accountNumber, String firstName, String lastName, double balance)
 			throws IllegalArgumentException, IOException {
 		RandomAccessAccountRecord record = getRecord(accountNumber);
-		if (accountNumber == 0)
+		if (record.getAccount() != 0)
 			throw new IllegalArgumentException("Account already exist");
 		file.seek((accountNumber - 1) * RandomAccessAccountRecord.SIZE);
 		record = new RandomAccessAccountRecord(accountNumber, firstName, lastName, balance);
@@ -47,7 +47,7 @@ public class FileEditor {
 
 	public void deleteRecord(int accountNumber) throws IllegalArgumentException, IOException {
 		RandomAccessAccountRecord record = getRecord(accountNumber);
-		if (accountNumber == 0)
+		if (record.getAccount() == 0)
 			throw new IllegalArgumentException("Account does not exist");
 		file.seek((accountNumber - 1) * RandomAccessAccountRecord.SIZE);
 		record = new RandomAccessAccountRecord();

@@ -92,7 +92,7 @@ public class TransactionProcessor extends JFrame {
 				fields[BankUI.FIRSTNAME].setEnabled(true);
 				fields[BankUI.LASTNAME].setEnabled(true);
 				fields[BankUI.BALANCE].setEnabled(true);
-				fields[BankUI.TRANSACTION].setEnabled(true);
+				fields[BankUI.TRANSACTION].setEnabled(false);
 				actionButton.setEnabled(true);
 				actionButton.setText("Create");
 				cancelButton.setEnabled(true);
@@ -227,7 +227,6 @@ public class TransactionProcessor extends JFrame {
 			String firstName = values[BankUI.FIRSTNAME];
 			String lastName = values[BankUI.LASTNAME];
 			double balance = Double.parseDouble(values[BankUI.BALANCE]);
-
 			if (action.equals("Create"))
 				dataFile.newRecord(accountNumber, firstName, lastName, balance);
 			else if (action.equals("Update"))
@@ -238,11 +237,14 @@ public class TransactionProcessor extends JFrame {
 				JOptionPane.showMessageDialog(this, "Bad Action");
 		} catch (NumberFormatException e) {
 			// TODO: handle exception
-			JOptionPane.showMessageDialog(this, "Bad Input");
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			// e.printStackTrace();
 		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, "Bad Account Number");
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			// e.printStackTrace();
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(this, "IO Error");
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			// e.printStackTrace();
 		}
 	}
 
@@ -252,7 +254,7 @@ public class TransactionProcessor extends JFrame {
 			int accountNumber = Integer.parseInt(userInterface.getFieldValues()[BankUI.ACCOUNT]);
 			RandomAccessAccountRecord record = dataFile.getRecord(accountNumber);
 			if (record.getAccount() == 0)
-				JOptionPane.showMessageDialog(this, "Bad Account Number");
+				JOptionPane.showMessageDialog(this, "Record does not exist");
 			double change = Double.parseDouble(transaction);
 			String[] values = { String.valueOf(record.getAccount()), record.getFirstName(), record.getLastName(),
 					String.valueOf(record.getBalance() + change), "Charge(+) or payment(-)" };
@@ -260,7 +262,7 @@ public class TransactionProcessor extends JFrame {
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(this, "NumberFormat Error");
 		} catch (IllegalArgumentException e) {
-			JOptionPane.showMessageDialog(this, "Bad Account Number");
+			JOptionPane.showMessageDialog(this, e.getMessage());
 		} catch (IOException e) {
 			// TODO: handle exception
 			JOptionPane.showMessageDialog(this, "IO Error");
