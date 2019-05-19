@@ -1,3 +1,6 @@
+
+//P673
+//It still can not run properly after I tried several times ...
 import java.applet.AppletContext;
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -37,8 +40,9 @@ public class SiteSelector extends JApplet {
 				// TODO Auto-generated method stub
 				Object object = siteChooser.getSelectedValue();
 				URL newDocument = (URL) sites.get(object);
+				System.out.println("URL is " + newDocument);
 				AppletContext browser = getAppletContext();
-				browser.showDocument(newDocument);
+				browser.showDocument(newDocument); // nothing happened here
 			}
 		});
 
@@ -54,9 +58,9 @@ public class SiteSelector extends JApplet {
 		title = getParameter("title" + counter);
 
 		while (title != null) {
-			location = getParameter("location" + counter);
+			location = getParameter("location" + counter); // we should add param in Run Config
 			try {
-				url = new URL(location);
+				url = new URL(location + "/index.html");
 				sites.put(title, url);
 				siteNames.add(title);
 			} catch (MalformedURLException e) {
