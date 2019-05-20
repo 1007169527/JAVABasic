@@ -1,5 +1,7 @@
+
 //P681
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +17,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.border.Border;
 
 public class Server extends JFrame {
 	private JTextField enterField;
@@ -25,14 +26,15 @@ public class Server extends JFrame {
 	private ServerSocket server;
 	private Socket connection;
 	private int counter = 1;
-	
+
 	public Server() {
 		// TODO Auto-generated constructor stub
 		Container container = getContentPane();
 		enterField = new JTextField();
 		enterField.setEditable(false);
+		enterField.setBackground(Color.lightGray);
 		enterField.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -40,48 +42,48 @@ public class Server extends JFrame {
 				enterField.setText("");
 			}
 		});
-		
-		container.add(enterField,BorderLayout.NORTH);
-		displayArea= new JTextArea();
+
+		container.add(enterField, BorderLayout.SOUTH);
+		displayArea = new JTextArea();
 		container.add(new JScrollPane(displayArea));
-		setSize(300,150);
+		setSize(300, 150);
 		setVisible(true);
 	}
 
 	public void runServer() {
 		// TODO Auto-generated method stub
 		try {
-			server = new ServerSocket(12345,100);
-			while(true) {
+			server = new ServerSocket(12345, 100);
+			while (true) {
 				try {
 					waitForConnection();
-					getState();
+					getStreams();
 					processConnection();
-				} catch (Exception e) { //should be EOFException 
+				} catch (EOFException e) {
 					System.out.println("Server terminated connection");
 				} finally {
 					closeConnection();
 					++counter;
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 	}
-	
-	private void closeConnection() {
+
+	private void waitForConnection() throws IOException {
 		// TODO Auto-generated method stub
-		displayMessage("\nTerminating connection\n");
-		setTextFieldEditable(false);
-		try {
-			output.close();
-			input.close();
-			connection.close();
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+		displayMessage("Wait for connection\n");
+		connection = server.accept();
+		displayMessage("Connection " + counter + " received from: " + connection.getInetAddress().getHostName());
+	}
+
+	private void getStreams() throws IOException {
+		output = new ObjectOutputStream(connection.getOutputStream());
+		output.flush();
+		input = new ObjectInputStream(connection.getInputStream());
+		displayMessage("\nGot I/O streams\n");
 	}
 
 	private void processConnection() throws IOException {
@@ -92,37 +94,44 @@ public class Server extends JFrame {
 		do {
 			try {
 				message = (String) input.readObject();
-				displayMessage("\n"+message);
-			} catch (Exception e) {
+				displayMessage("\n" + message);
+			} catch (ClassNotFoundException e) {
 				// TODO: handle exception
 				displayMessage("\nunkonw object type received");
 			}
-		} while(!message.equals("CLIENT>>> TERMINATE"));
+		} while (!message.equals("CLIENT>>> TERMINATE"));
 	}
 
-	private void setTextFieldEditable(boolean editable) {
+	private void closeConnection() {
 		// TODO Auto-generated method stub
-		SwingUtilities.invokeLater(new Runnable() {
-			
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				enterField.setEditable(editable);
-			}
-		});
+		displayMessage("\nTerminating connection\n");
+		setTextFieldEditable(false);
+		try {
+			output.close();
+			input.close();
+			connection.close();
+		} catch (IOException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 
-	private void waitForConnection() throws IOException {
+	private void sendData(String message) {
 		// TODO Auto-generated method stub
-		displayMessage("Wait for connection\n");
-		connection = server.accept();
-		displayMessage("Connection " + counter + " received from: " + connection.getInetAddress().getHostName());
+		try {
+			output.writeObject("SERVER>>>> " + message);
+			output.flush();
+			displayMessage("\nSERVER>>>> " + message);
+		} catch (IOException e) {
+			// TODO: handle exception
+			displayMessage("\nError writing object\n");
+		}
 	}
 
 	private void displayMessage(String message) {
 		// TODO Auto-generated method stub
 		SwingUtilities.invokeLater(new Runnable() {
-			
+
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
@@ -132,23 +141,16 @@ public class Server extends JFrame {
 		});
 	}
 
-	private void sendData(String message) {
+	private void setTextFieldEditable(boolean editable) {
 		// TODO Auto-generated method stub
-		try {
-			output.writeObject("SERVER>>>> " + message);
-			output.flush();
-			displayMessage("\nSERVER>>>> " + message);
-		} catch (Exception e) {
-			// TODO: handle exception
-			displayMessage("\nError writing object\n");
-		}
-	}
-	
-	private void getStreams() throws IOException {
-		output= new ObjectOutputStream(connection.getOutputStream());
-		output.flush();
-		input = new ObjectInputStream(connection.getInputStream());
-		displayMessage("\nGot I/O streams\n");
+		SwingUtilities.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				enterField.setEditable(editable);
+			}
+		});
 	}
 
 	public static void main(String[] args) {
