@@ -39,7 +39,7 @@ public class Server extends JFrame {
 				DatagramPacket receivePacket = new DatagramPacket(data, data.length);
 				socket.receive(receivePacket);
 				displayMessage("\nPacket received:" + "\nFrom host: " + receivePacket.getAddress() + "\nLength: "
-						+ receivePacket.getLength() + "\nContaining:\n"
+						+ receivePacket.getLength() + "\nContaining: "
 						+ new String(receivePacket.getData(), 0, receivePacket.getLength()));
 				sendPacketToClient(receivePacket);
 			} catch (IOException e) {
