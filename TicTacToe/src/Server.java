@@ -16,7 +16,7 @@ public class Server extends JFrame {
 	private ServerSocket server;
 	private int currentPlayer;
 	private final int PLAYER_X = 0, PLAYER_O = 1;
-	private final char X_MARK = 'x', O_MARK = 'o';
+	private final char X_MARK = 'X', O_MARK = 'O';
 
 	public Server() {
 		// TODO Auto-generated constructor stub
@@ -72,7 +72,6 @@ public class Server extends JFrame {
 	}
 
 	public synchronized boolean validateAndMove(int location, int player) {
-		boolean moveDone = false;
 		while (player != currentPlayer) {
 			try {
 				wait();
@@ -166,7 +165,7 @@ public class Server extends JFrame {
 					int location = input.readInt();
 					if (validateAndMove(location, playerNumber)) {
 						displayMessage("\nlocation: " + location);
-						output.writeUTF("Invalid move.");
+						output.writeUTF("Valid move.");
 					} else
 						output.writeUTF("Invalid move,try again");
 				}

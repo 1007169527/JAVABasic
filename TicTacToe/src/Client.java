@@ -98,7 +98,7 @@ public class Client extends JApplet implements Runnable {
 		} else if (message.equals("Invalid move, try again")) {
 			displayMessage(message + "\n");
 			myTurn = true;
-		} else if (message.equals("Opponent move, try again")) {
+		} else if (message.equals("Opponent moved")) {
 			try {
 				int location = input.readInt();
 				int row = location / 3;
@@ -111,7 +111,7 @@ public class Client extends JApplet implements Runnable {
 				e.printStackTrace();
 			}
 		} else {
-			displayMessage(message);
+			displayMessage(message + "\n");
 		}
 	}
 
@@ -165,7 +165,7 @@ public class Client extends JApplet implements Runnable {
 			location = squareLocation;
 			mark = squareMark;
 			addMouseListener(new MouseAdapter() {
-				public void mouseReleased(MouseEvent e) {
+				public void mousePressed(MouseEvent e) {
 					setCurrentSquare(Square.this);
 					sendClickedSquare(getSquareLocation());
 				}
