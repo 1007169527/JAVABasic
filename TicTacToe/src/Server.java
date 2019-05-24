@@ -167,7 +167,7 @@ public class Server extends JFrame {
 						displayMessage("\nlocation: " + location);
 						output.writeUTF("Valid move.");
 					} else
-						output.writeUTF("Invalid move,try again");
+						output.writeUTF("Invalid move, try again");
 				}
 				connection.close();
 			} catch (IOException e) {
