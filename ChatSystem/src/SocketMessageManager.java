@@ -30,7 +30,7 @@ public class SocketMessageManager implements MessageManager {
 	}
 
 	@Override
-	public void disconnct(MessageListener listener) {
+	public void disconnect(MessageListener listener) {
 		// TODO Auto-generated method stub
 		if (!connected)
 			return;
