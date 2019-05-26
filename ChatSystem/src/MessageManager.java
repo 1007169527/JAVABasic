@@ -1,4 +1,4 @@
-
+//P711
 public interface MessageManager {
 	public void connect(MessageListener listener);
 

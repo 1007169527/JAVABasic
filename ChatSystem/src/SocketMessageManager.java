@@ -1,3 +1,5 @@
+
+//P712
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -54,6 +56,7 @@ public class SocketMessageManager implements MessageManager {
 		// TODO Auto-generated method stub
 		if (!connected)
 			return;
+		//System.out.println("new SendingThread");
 		new SendingThread(clientSocket, from, message).start();
 	}
 

@@ -1,3 +1,5 @@
+
+//P715
 import java.io.IOException;
 import java.io.InterruptedIOException;
 import java.net.DatagramPacket;
@@ -9,7 +11,7 @@ public class PacketReceivingThread extends Thread {
 	private MessageListener messageListener;
 	private MulticastSocket multicastSocket;
 	private InetAddress multicastGroup;
-	private boolean keepListening;
+	private boolean keepListening = true;
 
 	public PacketReceivingThread(MessageListener listener) {
 		// TODO Auto-generated constructor stub
@@ -18,6 +20,7 @@ public class PacketReceivingThread extends Thread {
 		try {
 			multicastSocket = new MulticastSocket(SocketMessengerConstants.MULTICAST_LISTENING_PORT);
 			multicastGroup = InetAddress.getByName(SocketMessengerConstants.MULTICAST_ADDRESS);
+			multicastSocket.joinGroup(multicastGroup);
 			multicastSocket.setSoTimeout(5000);
 		} catch (IOException e) {
 			// TODO: handle exception
@@ -30,8 +33,8 @@ public class PacketReceivingThread extends Thread {
 		// TODO Auto-generated method stub
 		super.run();
 		while (keepListening) {
-			byte[] buffer = new byte[SocketMessengerConstants.MESSAGE_SIZR];
-			DatagramPacket packet = new DatagramPacket(buffer, SocketMessengerConstants.MESSAGE_SIZR);
+			byte[] buffer = new byte[SocketMessengerConstants.MESSAGE_SIZE];
+			DatagramPacket packet = new DatagramPacket(buffer, SocketMessengerConstants.MESSAGE_SIZE);
 			try {
 				multicastSocket.receive(packet);
 			} catch (InterruptedIOException e) {
@@ -42,6 +45,7 @@ public class PacketReceivingThread extends Thread {
 				break;
 			}
 			String message = new String(packet.getData());
+			System.out.println("Receiving a message: " + message);
 			message = message.trim();
 			StringTokenizer tokenizer = new StringTokenizer(message, SocketMessengerConstants.MESSAGE_SEPARATOR);
 			if (tokenizer.countTokens() == 2)
@@ -58,6 +62,6 @@ public class PacketReceivingThread extends Thread {
 
 	public void stopListening() {
 		// TODO Auto-generated method stub
-		keepListening = true;
+		keepListening = false;
 	}
 }

@@ -1,3 +1,5 @@
+
+//P718
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
@@ -7,8 +9,6 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -26,9 +26,9 @@ public class ClientGUI extends JFrame {
 	private JMenu serverMenu;
 	private JTextArea messageArea;
 	private JTextArea inputArea;
-	private JButton connectButton;
+	// private JButton connectButton;
 	private JMenuItem connectMenuItem;
-	private JButton disconnectButton;
+	// private JButton disconnectButton;
 	private JMenuItem disconnectMenuItem;
 	private JButton sendButton;
 	private JLabel statusBar;
@@ -46,25 +46,31 @@ public class ClientGUI extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.add(serverMenu);
 		setJMenuBar(menuBar);
-		Icon connectionIcon = new ImageIcon(getClass().getResource("images/Connect.gif"));
-		connectButton = new JButton("Connect", connectionIcon);
-		connectMenuItem = new JMenuItem("Connect", connectionIcon);
+		// Icon connectionIcon = new
+		// ImageIcon(getClass().getResource("images/Connect.gif"));
+		// connectButton = new JButton("Connect", connectionIcon);
+		// connectMenuItem = new JMenuItem("Connect", connectionIcon);
+		// connectButton = new JButton("Connect");
+		connectMenuItem = new JMenuItem("Connect");
 		connectMenuItem.setMnemonic('C');
 		ActionListener connectListener = new ConnectListener();
 		connectMenuItem.addActionListener(connectListener);
-		Icon disconnectIcon = new ImageIcon(getClass().getResource("images/Disconnect.gif"));
-		disconnectButton = new JButton("Disconnect", disconnectIcon);
-		disconnectMenuItem = new JMenuItem("Disconnect", disconnectIcon);
+		// Icon disconnectIcon = new
+		// ImageIcon(getClass().getResource("images/Disconnect.gif"));
+		// disconnectButton = new JButton("Disconnect", disconnectIcon);
+		// disconnectMenuItem = new JMenuItem("Disconnect", disconnectIcon);
+		// disconnectButton = new JButton("Disconnect");
+		disconnectMenuItem = new JMenuItem("Disconnect");
 		disconnectMenuItem.setMnemonic('D');
-		disconnectButton.setEnabled(false);
+		// disconnectButton.setEnabled(false);
 		disconnectMenuItem.setEnabled(false);
 		ActionListener disconnectListener = new DisconnectListener();
 		disconnectMenuItem.addActionListener(disconnectListener);
 		serverMenu.add(connectMenuItem);
 		serverMenu.add(disconnectMenuItem);
 		JPanel buttonPanel = new JPanel();
-		buttonPanel.add(connectButton);
-		buttonPanel.add(disconnectButton);
+		// buttonPanel.add(connectButton);
+		// buttonPanel.add(disconnectButton);
 		messageArea = new JTextArea();
 		messageArea.setEditable(false);
 		messageArea.setWrapStyleWord(true);
@@ -76,8 +82,9 @@ public class ClientGUI extends JFrame {
 		inputArea.setWrapStyleWord(true);
 		inputArea.setLineWrap(true);
 		inputArea.setEditable(false);
-		Icon sendIcon = new ImageIcon(getClass().getResource("images/Send.gif"));
-		sendButton = new JButton("Send", sendIcon);
+		// Icon sendIcon = new ImageIcon(getClass().getResource("images/Send.gif"));
+		// sendButton = new JButton("Send", sendIcon);
+		sendButton = new JButton("Send");
 		sendButton.setEnabled(false);
 		sendButton.addActionListener(new ActionListener() {
 
@@ -114,10 +121,11 @@ public class ClientGUI extends JFrame {
 			messageManager.connect(messageListener);
 			userName = JOptionPane.showInputDialog(ClientGUI.this, "Enter user name:");
 			messageArea.setText("");
-			connectButton.setEnabled(false);
+			// connectButton.setEnabled(false);
 			connectMenuItem.setEnabled(false);
-			disconnectButton.setEnabled(true);
+			// disconnectButton.setEnabled(true);
 			disconnectMenuItem.setEnabled(true);
+			sendButton.setEnabled(true);
 			inputArea.setEditable(true);
 			inputArea.requestFocus();
 			statusBar.setText("Connected: " + userName);
@@ -132,10 +140,10 @@ public class ClientGUI extends JFrame {
 			// TODO Auto-generated method stub
 			messageManager.disconnect(messageListener);
 			sendButton.setEnabled(false);
-			disconnectButton.setEnabled(false);
+			// disconnectButton.setEnabled(false);
 			disconnectMenuItem.setEnabled(false);
 			inputArea.setEditable(false);
-			connectButton.setEnabled(true);
+			// connectButton.setEnabled(true);
 			connectMenuItem.setEnabled(true);
 			statusBar.setText("Not connected");
 		}

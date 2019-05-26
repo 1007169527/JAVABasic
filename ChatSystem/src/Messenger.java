@@ -1,4 +1,4 @@
-
+//P723
 public class Messenger {
 	private static MessageManager messageManager;
 
