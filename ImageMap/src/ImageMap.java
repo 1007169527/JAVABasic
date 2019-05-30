@@ -27,7 +27,7 @@ public class ImageMap extends JApplet {
 
 		mapImages = new ImageIcon[4];
 		for (int count = 0; count < mapImages.length; count++)
-			mapImages[count] = new ImageIcon("../images/loop" + count + ".jpg");
+			mapImages[count] = new ImageIcon(getClass().getResource("images/loop" + count + ".jpg"));
 	}
 
 	@Override
