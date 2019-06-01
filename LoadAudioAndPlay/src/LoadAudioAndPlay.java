@@ -21,7 +21,7 @@ public class LoadAudioAndPlay extends JApplet {
 		Container container = getContentPane();
 		container.setLayout(new FlowLayout());
 
-		String choices[] = { "wav", "mp3" };
+		String choices[] = { "wav", "au" };
 		chooseSound = new JComboBox(choices);
 		chooseSound.addItemListener(new ItemListener() {
 
@@ -50,7 +50,7 @@ public class LoadAudioAndPlay extends JApplet {
 		container.add(stopButton);
 
 		sound1 = getAudioClip(getCodeBase(), "sample.wav");
-		sound2 = getAudioClip(getCodeBase(), "sample.mp3");
+		sound2 = getAudioClip(getCodeBase(), "sample.au");
 		if (sound1 == null || sound2 == null)
 			System.out.println("init sample failed");
 		currentSound = sound1;
