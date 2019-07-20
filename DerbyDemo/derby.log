@@ -1,0 +1,19 @@
+----------------------------------------------------------------
+Sat Jul 20 14:36:14 HKT 2019:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.14.2.0 - (1828579): instance a816c00e-016c-0e18-6187-0000031185b8 
+on database directory /home/guochupeng/learnJAVA/DerbyDemo/derbyDB with class loader sun.misc.Launcher$AppClassLoader@355da254 
+Loaded from file:/home/guochupeng/Tools/db-derby-10.14.2.0-bin/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_191-8u191-b12-2ubuntu0.16.04.1-b12
+user.dir=/home/guochupeng/learnJAVA/DerbyDemo
+os.name=Linux
+os.arch=amd64
+os.version=3.18.0-19346-g9ff80f5e4c97
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat Jul 20 14:37:08 HKT 2019: Shutting down Derby engine
+----------------------------------------------------------------
+Sat Jul 20 14:37:08 HKT 2019:
+Shutting down instance a816c00e-016c-0e18-6187-0000031185b8 on database directory /home/guochupeng/learnJAVA/DerbyDemo/derbyDB with class loader sun.misc.Launcher$AppClassLoader@355da254 
+----------------------------------------------------------------
