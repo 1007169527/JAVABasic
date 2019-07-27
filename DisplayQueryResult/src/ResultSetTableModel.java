@@ -25,15 +25,19 @@ public class ResultSetTableModel extends AbstractTableModel {
 		setQuery(query);
 		System.out.println("query end");
 	}
-	/*
-	 * public Class getColumnClass(int column) throws IllegalStateException { if
-	 * (!connectedToDatabase) throw new
-	 * IllegalStateException("Not Connect to Database");
-	 * System.out.println("getColumnClass called with colume = " + column); try {
-	 * String className = metaData.getColumnClassName(column + 1); return
-	 * Class.forName(className); } catch (Exception e) { // TODO: handle exception
-	 * e.printStackTrace(); } return Object.class; }
-	 */
+
+	// public Class getColumnClass(int column) throws IllegalStateException {
+	// if (!connectedToDatabase)
+	// throw new IllegalStateException("Not Connect to Database");
+	// System.out.println("getColumnClass called with colume = " + column);
+	// try {
+	// String className = metaData.getColumnClassName(column + 1);
+	// return Class.forName(className);
+	// } catch (Exception e) { // TODO: handle exception
+	// e.printStackTrace();
+	// }
+	// return Object.class;
+	// }
 
 	@Override
 	public int getColumnCount() throws IllegalStateException {
@@ -41,7 +45,7 @@ public class ResultSetTableModel extends AbstractTableModel {
 
 		if (!connectedToDatabase)
 			throw new IllegalStateException("Not Connected to DataBase");
-		System.out.println("getColumnCount called");
+		//System.out.println("getColumnCount called");
 		try {
 			return metaData.getColumnCount();
 		} catch (SQLException e) { // TODO: handle
@@ -51,14 +55,17 @@ public class ResultSetTableModel extends AbstractTableModel {
 		return 0;
 	}
 
-	/*
-	 * public String getColumeName(int colume) throws IllegalStateException { if
-	 * (!connectedToDatabase) throw new
-	 * IllegalStateException("Not Connected to DataBase");
-	 * System.out.println("getColumeName called with colume = " + colume); try {
-	 * return metaData.getColumnName(colume + 1); } catch (SQLException e) {
-	 * e.printStackTrace(); } return ""; }
-	 */
+	public String getColumnName(int colume) throws IllegalStateException {
+		if (!connectedToDatabase)
+			throw new IllegalStateException("Not Connected to DataBase");
+		System.out.println("getColumeName called with colume = " + colume);
+		try {
+			return metaData.getColumnName(colume + 1);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return "";
+	}
 
 	@Override
 	public int getRowCount() throws IllegalStateException {
@@ -66,7 +73,7 @@ public class ResultSetTableModel extends AbstractTableModel {
 
 		if (!connectedToDatabase)
 			throw new IllegalStateException("Not Connected to DataBase"); //
-		System.out.println("getRowCount called");
+		//System.out.println("getRowCount called");
 		return numberOfRows;
 	}
 
@@ -74,7 +81,7 @@ public class ResultSetTableModel extends AbstractTableModel {
 		// TODO Auto-generated method stub
 		if (!connectedToDatabase)
 			throw new IllegalStateException("Not Connected to DataBase");
-		System.out.println("getValueAt called with row = " + row + " column = " + column);
+		//System.out.println("getValueAt called with row = " + row + " column = " + column);
 		try {
 			resultSet.absolute(row + 1);
 			return resultSet.getObject(column + 1);
