@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
-public class WelcomeServlet extends HttpServlet {
+public class WelcomeServlet1 extends HttpServlet {
 	protected void doGet(HttpServletRequest request,HttpServletResponse response) 
 			throws ServletException,IOException{
 		response.setContentType("text/html");
@@ -18,7 +18,7 @@ public class WelcomeServlet extends HttpServlet {
 		out.println("<title>A Simple Servlet Example</title>");
 		out.println("</head>");
 		out.println("<body>");
-		out.println("<h1>Welcome to Servlet!<h1/>");
+		out.println("<h1>Welcome to Servlet1 !<h1/>");
 		out.println("</body>");
 		out.println("</html>");
 		out.close(); 

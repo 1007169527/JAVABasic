@@ -27,7 +27,7 @@ public class WelcomeServlet3 extends HttpServlet {
 		
 		out.println("<body>");
 		out.println("<h1>Hello " + firstName + ",<br />");
-		out.println("Welcome to Servlets!</h1>");
+		out.println("Welcome to Servlets3!</h1>");
 		out.println("</body>");
 		
 		out.println("</html>");

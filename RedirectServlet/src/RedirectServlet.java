@@ -34,7 +34,7 @@ public class RedirectServlet extends HttpServlet {
 		out.println("<body>");
 		out.println("<h1>Invalid page requested</h1>");
 		out.println("<p><a href = " +
-				"\"/RedirectServlet.html\">");
+				"\"RedirectServlet.html\">");
 		out.println("Click here to choose again</a></p>");
 		out.println("</body>");
 		
