@@ -7,19 +7,23 @@
     <meta http-equiv = "refresh" content = "60" />
     <title>A Simple JSP Example</title>
     <style type = "text/css">
-      .big { font-family: helvetica, arial, sans-serif;
-        font-weight: bold;
-        font-size: 2em; }
-      .style1 { background-color: red; }
+      body {
+        font-family: helvetica, arial, sans-serif;
+      }
+      table, tr, td {
+        border: 3px groove;
+        padding: 5px;
+        background-color: #dddddd;
+      }
     </style>
   </head>
   
   <body>
-    <p class = "big">Simple JSP Example</p>
-    <table style = "border: 6px outset;">
+    <p>Simple JSP Example</p>
+    <table>
       <tr>
-        <td class = "style1" >
-          <p class = "big" style = "color: cyan;">
+        <td>
+          <p>
             <!-- JSP expression to insert date/time -->
             <%= new java.util.Date() %>
           </p>
