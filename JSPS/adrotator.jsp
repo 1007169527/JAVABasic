@@ -22,7 +22,7 @@
       <a href = "<jsp:getProperty name = "rotator"
         property = "link" />">
         <img src = "<jsp:getProperty name = "rotator"
-          property = "image" />" alt = "advertisement" />
+          property = "image" />" width = "100" height = "100" alt = "advertisement" />
       </a>
     </p>
   </body>
