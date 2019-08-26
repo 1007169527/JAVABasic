@@ -1,4 +1,4 @@
-package com.rtfsc;
+package net.rtfsc;
 public class Rotator {
 	private String images[] = {"images/book1.png","images/book2.jpg","images/book3.jpg"};
 	private String links[] = {"https://item.jd.com/31107521323.html",

@@ -3,7 +3,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <jsp:useBean id = "rotator" scope = "application"
-  class = "com.rtfsc.Rotator" />
+  class = "net.rtfsc.Rotator" />
 
 <html xmlns = "http://www.w3.org/1999/xhtml">
   <head>
