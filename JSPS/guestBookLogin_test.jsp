@@ -5,7 +5,7 @@
 <%@ page errorPage = "guestBookErrorPage.jsp" %>
 <jsp:useBean id = "guest" scope = "page"
   class = "net.rtfsc.GuestBean" />
-<jsp:useBean id = "guestData" scope = "request"
+<jsp:useBean id = "guestBean" scope = "request"
   class = "net.rtfsc.GuestDataBean" />
 
 <html xmlns = "http://www.w3.org/1999/xhtml">
@@ -62,8 +62,7 @@
      </form>
    <%
      } else {
-       guestData.addGuest(guest); 
-   %>
+   %>        
        <jsp:forward page = "guestBookView.jsp" />
    <%
      }

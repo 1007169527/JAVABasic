@@ -3,7 +3,7 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <%@ page isErrorPage = "true" %>
 <%@ page import = "java.util.*" %>
-<%@ page import = "java.sql.*" %>
+<%@ page import = "net.rtfsc.*" %>
   
 <html xmlns = "http://www.w3.org/1999/xhtml">
 
@@ -20,21 +20,18 @@
 <body>
   <p class = "bigRed">
     <%
-      if(exception instanceof SQLException) {
+      if(exception instanceOf SQLException)
     %>
-        An SQLException
+      An SQLException
     <%
-      } else if(exception instanceof ClassNotFoundException) {
+      else if(exception instanceOf ClassNotFoundException)
     %>
-        A ClassNotFoundException
+      A ClassNotFoundException
     <%
-      } else {
+      else
     %>
-        An exception
-    <%
-      }
-    %>
-        occured while interacting with guestbook database.
+      An exception
+      occured while interacting with guestbook database.
   </p>
   
   <p class = "bigRed">

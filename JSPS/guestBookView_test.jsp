@@ -5,7 +5,7 @@
 <%@ page import = "java.util.*" %>
 <%@ page import = "net.rtfsc.*" %>
 <jsp:useBean id = "guestData" scope = "request"
-  class = "net.rtfsc.GuestDataBean" />
+  class = "net.rtfsc.guestDataBean" />
   
 <html xmlns = "http://www.w3.org/1999/xhtml">
 
@@ -29,9 +29,9 @@
    <table>
      <thead>
        <tr>
-         <th style = "width: 100px;">Last name</th>
-         <th style = "width: 100px;">First name</th>
-         <th style = "width: 200px;">Email</th>
+         <th> style = "width: 100px;">Last name</th>
+         <th> style = "width: 100px;">First name</th>
+         <th> style = "width: 200px;">Email</th>
        </tr>
      </thead>
      
@@ -49,7 +49,7 @@
            <td><a href "mailto:<%= guest.getEmail() %>">
              <%= guest.getEmail() %></td>
          </tr>
-       <%
+       </%
          }
        %>
      </tbody>

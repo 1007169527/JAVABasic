@@ -30,11 +30,9 @@ public class GuestDataBean {
 	}
 	
 	public void addGuest(GuestBean guest) throws SQLException {
-		statement.executeQuery("INSERT INTO guests (firstName, " + "lastName, email) " +
-			"VALUES('" + guest.getFirstName() +
-			"', '" + guest.getLastName() + 
-			"', '" +  guest.getEmail() + "')");
-	}
+		statement.executeUpdate("INSERT INTO guests VALUES('" + guest.getFirstName() + "', '" + guest.getLastName() + "', '" + guest.getEmail() + "')");
+		//statement.executeUpdate("INSERT INTO guests (firstName, lastName, email) VALUES('" + guest.getFirstName() + "', '" + guest.getLastName() + "', '" + guest.getEmail() + "')");
+        }
 	
 	protected void finalize() {
 		try {
