@@ -20,15 +20,12 @@ public class ServerThread extends Thread {
 					new InputStreamReader(this.clientSocket.getInputStream(), "UTF-8"));
 			socketBufferedWriter = new BufferedWriter(
 					new OutputStreamWriter(this.clientSocket.getOutputStream(), "UTF-8"));
-			fileBufferedWriter = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream("C:\\Users\\10071\\Desktop\\tmp\\dest2-20191008-095928.log", false), "UTF-8"));
 		} catch (IOException e) {
 			return;
 		}
 	}
 
 	public void run() {
-		byte[] buf = new byte[4096];
 		String line;
 		while (true) {
 			try {
@@ -40,7 +37,11 @@ public class ServerThread extends Thread {
 					return;
 				} else {
 					System.out.println("a new line from client: " + line);
-					fileBufferedWriter.write(line + "\r\n");
+					if (line.contains("RECOVERY_LOG_FILE-"))
+						fileBufferedWriter = new BufferedWriter(new OutputStreamWriter(
+								new FileOutputStream("C:\\Users\\10071\\Desktop\\tmp\\" + line, false), "UTF-8"));
+					else
+						fileBufferedWriter.write(line + "\r\n");
 					fileBufferedWriter.flush();
 				}
 			} catch (IOException e) {
