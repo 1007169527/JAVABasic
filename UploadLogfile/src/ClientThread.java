@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -7,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.net.Socket;
+import java.security.MessageDigest;
 
 public class ClientThread extends Thread {
 	protected Socket clientSocket;
@@ -40,6 +43,34 @@ public class ClientThread extends Thread {
 		this.logFileFullPath = logFileFullPath;
 		this.pcName = pcName;
 		System.out.println("a new client thread init finished");
+	}
+
+	private String getFileMD5(File file) {
+		if (!file.exists() || !file.isFile()) {
+			return null;
+		}
+		MessageDigest digest = null;
+		FileInputStream in = null;
+		byte buffer[] = new byte[1024];
+		int len;
+		try {
+			digest = MessageDigest.getInstance("MD5");
+			in = new FileInputStream(file);
+			while ((len = in.read(buffer, 0, 1024)) != -1) {
+				digest.update(buffer, 0, len);
+			}
+			in.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		BigInteger bigInt = new BigInteger(1, digest.digest());
+		return bigInt.toString(16);
+	}
+
+	private String getFileMD5(String filepath) {
+		File file = new File(filepath);
+		return getFileMD5(file);
 	}
 
 	private void readLogFile() {
@@ -78,11 +109,24 @@ public class ClientThread extends Thread {
 				System.out.println("This log is not valid !");
 			} else {
 				socketBufferedWriter.write(logStringBuffer.toString());
+				socketBufferedWriter.write("TRANSFORM_FINISH" + "\r\n");
 				socketBufferedWriter.flush();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private boolean isTransformSuccess() {
+		System.out.println("clientFile's md5sum is " + getFileMD5(logFileFullPath));
+		String line = "";
+		try {
+			line = socketBufferedReader.readLine();
+			System.out.println("serverFile's md5sum is " + line);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
@@ -91,17 +135,13 @@ public class ClientThread extends Thread {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void checkServerMsg() {
-		String message = "";
-		do {
-			try {
-				message = socketBufferedReader.readLine();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} while (!message.equals("SERVER>>> MD5 CHECK PASS"));
+		if (line.contains(getFileMD5(logFileFullPath))) {
+			System.out.println("Transform Success !");
+			return true;
+		} else {
+			System.out.println("Transform Fail !");
+			return false;
+		}
 	}
 
 	private void updateLogPassList() {
@@ -125,8 +165,8 @@ public class ClientThread extends Thread {
 	public void run() {
 		readLogFile();
 		uploadLogFile();
-		// checkServerMsg();
-		updateLogPassList();
+		if (isTransformSuccess())
+			updateLogPassList();
 		return;
 	}
 }

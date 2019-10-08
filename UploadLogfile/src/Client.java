@@ -52,7 +52,8 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("logPassFileStringBuffer is " + logPassFileStringBuffer.toString());
+		// System.out.println("logPassFileStringBuffer is " +
+		// logPassFileStringBuffer.toString());
 	}
 
 	private boolean isInPassList(String fileName) {
@@ -63,13 +64,13 @@ public class Client {
 		String tmpString;
 		for (; loopCount <= logFiles.length - 1; loopCount++) {
 			tmpString = logFiles[loopCount];
-			System.out.println("tmpString is " + tmpString);
+			// System.out.println("tmpString is " + tmpString);
 			if (tmpString.equals("PassList") || tmpString.equals(latestLogPath) || isInPassList(tmpString))
 				continue;
 			else
-				break;
+				return fileDir + "\\" + logFiles[loopCount];
 		}
-		return fileDir + "\\" + logFiles[loopCount];
+		return "";
 	}
 
 	private void matchLatestLogFile() {
@@ -115,8 +116,8 @@ public class Client {
 		client.readPassList();
 		client.matchLatestLogFile();
 		logFileFullPath = client.loopLogFiles();
-		System.out.print("PCName=" + computerName + "\n\r");
-		System.out.print("LogFileFullPath=" + logFileFullPath + "\n\r");
+		// System.out.print("PCName=" + computerName + "\n\r");
+		// System.out.print("LogFileFullPath=" + logFileFullPath + "\n\r");
 		sleepSeconds(3);
 		if ("".equals(logFileFullPath) == false)
 			new ClientThread(socket, logFileFullPath, computerName).start();
