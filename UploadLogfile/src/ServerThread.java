@@ -1,6 +1,6 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -16,9 +16,12 @@ public class ServerThread extends Thread {
 		this.clientSocket = clientSocket;
 		System.out.println("Enter ServerThread");
 		try {
-			socketBufferedReader = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-			socketBufferedWriter = new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream()));
-			fileBufferedWriter = new BufferedWriter(new FileWriter("C:\\Users\\10071\\Desktop\\tmp\\dest"));
+			socketBufferedReader = new BufferedReader(
+					new InputStreamReader(this.clientSocket.getInputStream(), "UTF-8"));
+			socketBufferedWriter = new BufferedWriter(
+					new OutputStreamWriter(this.clientSocket.getOutputStream(), "UTF-8"));
+			fileBufferedWriter = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream("C:\\Users\\10071\\Desktop\\tmp\\dest2-20191008-095928.log", false), "UTF-8"));
 		} catch (IOException e) {
 			return;
 		}
@@ -37,7 +40,7 @@ public class ServerThread extends Thread {
 					return;
 				} else {
 					System.out.println("a new line from client: " + line);
-					fileBufferedWriter.write(line + "\n");
+					fileBufferedWriter.write(line + "\r\n");
 					fileBufferedWriter.flush();
 				}
 			} catch (IOException e) {

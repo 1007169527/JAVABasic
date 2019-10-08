@@ -1,7 +1,8 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -12,6 +13,7 @@ public class ClientThread extends Thread {
 	private BufferedReader socketBufferedReader = null;
 	private BufferedWriter socketBufferedWriter = null;
 	private BufferedReader fileBufferedReader = null;
+	private BufferedWriter fileBufferedWriter = null;
 	private int count = 0;
 
 	private String logFileFullPath = "";
@@ -20,9 +22,14 @@ public class ClientThread extends Thread {
 	public ClientThread(Socket clientSocket, String logFileFullPath, String pcName) {
 		this.clientSocket = clientSocket;
 		try {
-			socketBufferedWriter = new BufferedWriter(new OutputStreamWriter(this.clientSocket.getOutputStream()));
-			socketBufferedReader = new BufferedReader(new InputStreamReader(this.clientSocket.getInputStream()));
-			fileBufferedReader = new BufferedReader(new FileReader(logFileFullPath));
+			socketBufferedWriter = new BufferedWriter(
+					new OutputStreamWriter(this.clientSocket.getOutputStream(), "UTF-8"));
+			socketBufferedReader = new BufferedReader(
+					new InputStreamReader(this.clientSocket.getInputStream(), "UTF-8"));
+			fileBufferedReader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(logFileFullPath), "UTF-8"));
+			fileBufferedWriter = new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream("C:\\Users\\10071\\Desktop\\tmp\\dest1-20191008-095928.log", false), "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,6 +50,8 @@ public class ClientThread extends Thread {
 				System.out.println("a new line from src: " + line);
 				socketBufferedWriter.write(line + "\n");
 				socketBufferedWriter.flush();
+				fileBufferedWriter.write(line + "\r\n");
+				fileBufferedWriter.flush();
 				line = fileBufferedReader.readLine();
 			}
 		} catch (FileNotFoundException e) {

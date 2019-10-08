@@ -37,7 +37,7 @@ public class Client {
 
 	public static void main(String[] args) {
 		Client client = new Client();
-		String logFileFullPath = "C:\\Users\\10071\\Desktop\\tmp\\src";
+		String logFileFullPath = "C:\\Users\\10071\\Desktop\\tmp\\20191008-095928.log";
 		// while (true) {
 		// logFileFullPath = client.lockLogFile();
 		if ("".equals(logFileFullPath) == false)
