@@ -24,15 +24,7 @@ public class Client {
 	private int loopCount = 0;
 
 	public Client() {
-		try {
-			socket = new Socket(InetAddress.getByName("127.0.0.1"), 1992);
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Map<String, String> map = System.getenv();
-		computerName = map.get("COMPUTERNAME");
+
 	}
 
 	private void readPassList() {
@@ -52,8 +44,6 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// System.out.println("logPassFileStringBuffer is " +
-		// logPassFileStringBuffer.toString());
 	}
 
 	private boolean isInPassList(String fileName) {
@@ -111,17 +101,26 @@ public class Client {
 	}
 
 	public static void main(String[] args) {
-		Client client = new Client();
+		Map<String, String> map = System.getenv();
+		computerName = map.get("COMPUTERNAME");
 		String logFileFullPath = "";
-		client.readPassList();
-		client.matchLatestLogFile();
-		logFileFullPath = client.loopLogFiles();
-		// System.out.print("PCName=" + computerName + "\n\r");
-		// System.out.print("LogFileFullPath=" + logFileFullPath + "\n\r");
-		sleepSeconds(3);
-		if ("".equals(logFileFullPath) == false)
-			new ClientThread(socket, logFileFullPath, computerName).start();
-		else
-			sleepSeconds(5);
+		Client client = new Client();
+		while (true) {
+			try {
+				client.readPassList();
+				client.matchLatestLogFile();
+				logFileFullPath = client.loopLogFiles();
+				if ("".equals(logFileFullPath) == false) {
+					socket = new Socket(InetAddress.getByName("127.0.0.1"), 1992);
+					System.out.println("now upload " + logFileFullPath);
+					new ClientThread(socket, logFileFullPath, computerName).start();
+				}
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			sleepSeconds(10);
+		}
 	}
 }

@@ -20,7 +20,6 @@ public class ClientThread extends Thread {
 	private BufferedWriter fileBufferedWriter = null;
 	private StringBuffer logStringBuffer = new StringBuffer();
 	private String[] enterRecoveryStringBuffer = { "will_enter_recovery = 1", "BROWSER_LABEL_COUNT" };
-	private String[] exitRecoveryStringBuffer = { "", "" };
 	private int count = 0;
 	private boolean validLog = false;
 	private String logFileFullPath = "";
