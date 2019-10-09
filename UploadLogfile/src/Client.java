@@ -27,11 +27,31 @@ public class Client {
 
 	}
 
+	public static final boolean isNodeReachable(String hostname) {
+		try {
+			InetAddress address = InetAddress.getByName(hostname);
+			if (address.isReachable(3000)) {
+				System.out.println(hostname + " is reachable !");
+				return true;
+			} else {
+				System.out.println(hostname + " is unreachable !");
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println(hostname + "is unreachable !");
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	private void readPassList() {
 		File file = new File(logPassList);
+		logPassFileStringBuffer.setLength(0);
 		String line;
-		if (file.exists() == false)
+		if (file.exists() == false) {
+			logPassFileStringBuffer.append("");
 			return;
+		}
 		try {
 			fileBufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(logPassList), "UTF-8"));
 			line = fileBufferedReader.readLine();
@@ -44,6 +64,7 @@ public class Client {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		// System.out.println("####\n" + logPassFileStringBuffer + "\n####");
 	}
 
 	private boolean isInPassList(String fileName) {
@@ -55,7 +76,7 @@ public class Client {
 		for (; loopCount <= logFiles.length - 1; loopCount++) {
 			tmpString = logFiles[loopCount];
 			// System.out.println("tmpString is " + tmpString);
-			if (tmpString.equals("PassList") || tmpString.equals(latestLogPath) || isInPassList(tmpString))
+			if (tmpString.equals(latestLogPath) || isInPassList(tmpString))
 				continue;
 			else
 				return fileDir + "\\" + logFiles[loopCount];
@@ -77,19 +98,16 @@ public class Client {
 		}
 		// System.out.println("files.length = " + files.length);
 		for (int i = 0; i < logFiles.length; i++) {
-			// System.out.println("we got " + files[i]);
+			// System.out.println("we got " + logFiles[i]);
 			File f = new File(fileDir + "/" + logFiles[i]);
 			if (f.isFile()) {
-				if (logFiles[i].equals("PassList")) {
-					continue;
-				} else {
-					if (latestModifiedTime <= f.lastModified()) {
-						latestModifiedTime = f.lastModified();
-						latestLogPath = logFiles[i];
-					}
+				if (latestModifiedTime <= f.lastModified()) {
+					latestModifiedTime = f.lastModified();
+					latestLogPath = logFiles[i];
 				}
 			}
 		}
+		// System.out.println("latestLogPath is " + latestLogPath);
 	}
 
 	private static void sleepSeconds(int count) {
@@ -106,6 +124,8 @@ public class Client {
 		String logFileFullPath = "";
 		Client client = new Client();
 		while (true) {
+			while (isNodeReachable("172.20.5.239") == false)
+				sleepSeconds(3);
 			try {
 				client.readPassList();
 				client.matchLatestLogFile();
@@ -120,7 +140,7 @@ public class Client {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			sleepSeconds(10);
+			sleepSeconds(3);
 		}
 	}
 }

@@ -105,7 +105,7 @@ public class ClientThread extends Thread {
 				logFileName = logFileFullPath.substring(index2 + 1);
 			socketBufferedWriter.write("RECOVERY_LOG_FILE-" + pcName.toUpperCase() + "-" + logFileName + "\n");
 			if (validLog == false) {
-				System.out.println("This log is not valid !");
+				;// System.out.println("This log is not valid !");
 			} else {
 				socketBufferedWriter.write(logStringBuffer.toString());
 				socketBufferedWriter.write("TRANSFORM_FINISH" + "\r\n");
@@ -119,6 +119,10 @@ public class ClientThread extends Thread {
 	}
 
 	private boolean isTransformSuccess() {
+		if (validLog == false) {
+			System.out.println("This log is not valid !");
+			return true;
+		}
 		System.out.println("clientFile's md5sum is " + getFileMD5(logFileFullPath));
 		String line = "";
 		try {
